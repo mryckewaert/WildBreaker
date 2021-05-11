@@ -34,7 +34,7 @@ const brickOffsetLeft = 30;
 let score = 0;
 
 //compteur de vies
-const lives = 3;
+let lives = 3;
 
 // creation lignes et colonnes briques
 let bricks = [];
@@ -101,11 +101,11 @@ function drawScore() {
   context.fillText("Score: " + score, 8, 20);
 }
 
-// function drawLives() {
-//   context.font = "20px Arial";
-//   context.fillStyle = "blue";
-//   context.fillText("Lives: " + lives, canvas.width - 65, 20);
-// }
+function drawLives() {
+  context.font = "16px Arial";
+  context.fillStyle = "#0095DD";
+  context.fillText("Lives: " + lives, canvas.width - 65, 20);
+}
 
 function drawBall() {
   context.beginPath();
@@ -153,7 +153,7 @@ function draw() {
   drawBall();
   drawPaddle();
   drawScore();
-  // drawLives();
+  drawLives();
   collisionDetection();
 
   if (y + dy < ballRadius) {
@@ -162,17 +162,17 @@ function draw() {
     if (x > paddleX && x < paddleX + paddleWidth) {
       dy = -dy;
     } else {
-      // lives--;
-      // if (!lives) {
-      alert("GAME OVER, Mathias n'est jamais allé aussi loin, LUI");
-      document.location.reload();
-      // } else {
-      //   x = canvas.width / 2;
-      //   y = canvas.height - 30;
-      //   dx = 3;
-      //   dy = -3;
-      //   paddleX = (canvas.width - paddleWidth) / 2;
-      // }
+      lives--;
+      if (!lives) {
+        alert("GAME OVER, Mathias n'est jamais allé aussi loin, LUI");
+        document.location.reload();
+      } else {
+        x = canvas.width / 2;
+        y = canvas.height - 30;
+        dx = 3;
+        dy = -3;
+        paddleX = (canvas.width - paddleWidth) / 2;
+      }
     }
   }
 
