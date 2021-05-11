@@ -25,6 +25,24 @@ let leftPressed = false;
 let speed = 10;
 let interval = setInterval(draw, speed);
 
+//les briques
+const brickRowCount = 3;
+const brickColumnCount = 5;
+const brickWidth = 75;
+const brickHeight = 20;
+const brickPadding = 10;
+const brickOffsetTop = 30;
+const brickOffsetLeft = 30;
+
+// creation lignes et colonnes briques
+let bricks = [];
+for (let c = 0; c < brickColumnCount; c++) {
+  bricks[c] = [];
+  for (let r = 0; r < brickRowCount; r++) {
+    bricks[c][r] = { x: 0, y: 0 };
+  }
+}
+
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
 
@@ -64,9 +82,26 @@ function drawPaddle() {
   context.closePath();
 }
 
+function drawBricks() {
+  for (let c = 0; c < brickColumnCount; c++) {
+    for (let r = 0; c < brickRowCount; r++) {
+      let brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
+      let brickY = r * (brickWidth + brickPadding) + brickOffsetTop;
+      bricks[c][r].x = brickX;
+      bricks[c][r].y = brickY;
+      context.beginPath();
+      context.rect(brickX, brickY, brickWidth, brickHeight);
+      context.fillStyle = "blue";
+      context.fill();
+      context.closePath();
+    }
+  }
+}
+
 function draw() {
   context.clearRect(0, 0, canvas.width, canvas.height);
 
+  drawBricks();
   drawBall();
   drawPaddle();
 
