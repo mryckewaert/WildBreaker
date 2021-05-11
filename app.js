@@ -6,8 +6,8 @@ let x = canvas.width / 2;
 let y = canvas.height - 30;
 
 // Mouvement de la balle
-let dx = 2;
-let dy = -2;
+let dx = 3;
+let dy = -3;
 
 //La taille de la balle
 let ballRadius = 10;
@@ -21,10 +21,6 @@ let paddleX = (canvas.width - paddleWidth) / 2;
 let rightPressed = false;
 let leftPressed = false;
 
-//L'Animation de la balle
-let speed = 4;
-let interval = setInterval(draw, speed);
-
 //les briques
 const brickRowCount = 3;
 const brickColumnCount = 5;
@@ -36,6 +32,9 @@ const brickOffsetLeft = 30;
 
 //score
 let score = 0;
+
+//compteur de vies
+const lives = 3;
 
 // creation lignes et colonnes briques
 let bricks = [];
@@ -89,7 +88,6 @@ function collisionDetection() {
           if (score == brickRowCount * brickColumnCount) {
             alert("Bravo ! Mais tu ne battras jamais les devs ;)");
             document.location.reload();
-            clearInterval(interval);
           }
         }
       }
@@ -102,6 +100,12 @@ function drawScore() {
   context.fillStyle = "red";
   context.fillText("Score: " + score, 8, 20);
 }
+
+// function drawLives() {
+//   context.font = "20px Arial";
+//   context.fillStyle = "blue";
+//   context.fillText("Lives: " + lives, canvas.width - 65, 20);
+// }
 
 function drawBall() {
   context.beginPath();
@@ -149,6 +153,7 @@ function draw() {
   drawBall();
   drawPaddle();
   drawScore();
+  // drawLives();
   collisionDetection();
 
   if (y + dy < ballRadius) {
@@ -156,13 +161,18 @@ function draw() {
   } else if (y + dy > canvas.height - ballRadius) {
     if (x > paddleX && x < paddleX + paddleWidth) {
       dy = -dy;
-      //   interval = setInterval(draw, speed - 0.5);
     } else {
-      alert(
-        "Vous êtes trop lent mais toujours moins que MATHIAS ! Game Over !"
-      );
+      // lives--;
+      // if (!lives) {
+      alert("GAME OVER, Mathias n'est jamais allé aussi loin, LUI");
       document.location.reload();
-      clearInterval(interval);
+      // } else {
+      //   x = canvas.width / 2;
+      //   y = canvas.height - 30;
+      //   dx = 3;
+      //   dy = -3;
+      //   paddleX = (canvas.width - paddleWidth) / 2;
+      // }
     }
   }
 
@@ -178,4 +188,8 @@ function draw() {
 
   x += dx;
   y += dy;
+
+  requestAnimationFrame(draw);
 }
+
+draw();
