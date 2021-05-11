@@ -22,7 +22,7 @@ let rightPressed = false;
 let leftPressed = false;
 
 //L'Animation de la balle
-let speed = 10;
+let speed = 4;
 let interval = setInterval(draw, speed);
 
 //les briques
@@ -33,6 +33,9 @@ const brickHeight = 20;
 const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
+
+//score
+let score = 0;
 
 // creation lignes et colonnes briques
 let bricks = [];
@@ -45,6 +48,14 @@ for (let c = 0; c < brickColumnCount; c++) {
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
+document.addEventListener("mousemove", mouseMoveHandler, false);
+
+function mouseMoveHandler(e) {
+  let relativeX = e.clientX - canvas.offsetLeft;
+  if (relativeX > 0 && relativeX < canvas.width) {
+    paddleX = relativeX - paddleWidth / 2;
+  }
+}
 
 function keyDownHandler(e) {
   if (e.key == "Right" || e.key == "ArrowRight") {
@@ -74,10 +85,22 @@ function collisionDetection() {
         ) {
           dy = -dy;
           b.status = 0;
+          score++;
+          if (score == brickRowCount * brickColumnCount) {
+            alert("Bravo ! Mais tu ne battras jamais les devs ;)");
+            document.location.reload();
+            clearInterval(interval);
+          }
         }
       }
     }
   }
+}
+
+function drawScore() {
+  context.font = "20px Arial";
+  context.fillStyle = "red";
+  context.fillText("Score: " + score, 8, 20);
 }
 
 function drawBall() {
@@ -125,6 +148,7 @@ function draw() {
   drawBricks();
   drawBall();
   drawPaddle();
+  drawScore();
   collisionDetection();
 
   if (y + dy < ballRadius) {
