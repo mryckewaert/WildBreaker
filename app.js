@@ -39,7 +39,7 @@ let bricks = [];
 for (let c = 0; c < brickColumnCount; c++) {
   bricks[c] = [];
   for (let r = 0; r < brickRowCount; r++) {
-    bricks[c][r] = { x: 0, y: 0 };
+    bricks[c][r] = { x: 0, y: 0, status: 1 };
   }
 }
 
@@ -58,6 +58,25 @@ function keyUpHandler(e) {
     rightPressed = false;
   } else if (e.key == "Left" || e.key == "ArrowLeft") {
     leftPressed = false;
+  }
+}
+
+function collisionDetection() {
+  for (let c = 0; c < brickColumnCount; c++) {
+    for (let r = 0; r < brickRowCount; r++) {
+      const b = bricks[c][r];
+      if (b.status == 1) {
+        if (
+          x > b.x &&
+          x < b.x + brickWidth &&
+          y > b.y &&
+          y < b.y + brickHeight
+        ) {
+          dy = -dy;
+          b.status = 0;
+        }
+      }
+    }
   }
 }
 
@@ -85,15 +104,17 @@ function drawPaddle() {
 function drawBricks() {
   for (let c = 0; c < brickColumnCount; c++) {
     for (let r = 0; r < brickRowCount; r++) {
-      let brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
-      let brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
-      bricks[c][r].x = brickX;
-      bricks[c][r].y = brickY;
-      context.beginPath();
-      context.rect(brickX, brickY, brickWidth, brickHeight);
-      context.fillStyle = "#0095DD";
-      context.fill();
-      context.closePath();
+      if (bricks[c][r].status == 1) {
+        let brickX = c * (brickWidth + brickPadding) + brickOffsetLeft;
+        let brickY = r * (brickHeight + brickPadding) + brickOffsetTop;
+        bricks[c][r].x = brickX;
+        bricks[c][r].y = brickY;
+        context.beginPath();
+        context.rect(brickX, brickY, brickWidth, brickHeight);
+        context.fillStyle = "#0095DD";
+        context.fill();
+        context.closePath();
+      }
     }
   }
 }
@@ -104,6 +125,7 @@ function draw() {
   drawBricks();
   drawBall();
   drawPaddle();
+  collisionDetection();
 
   if (y + dy < ballRadius) {
     dy = -dy;
@@ -112,7 +134,9 @@ function draw() {
       dy = -dy;
       //   interval = setInterval(draw, speed - 0.5);
     } else {
-      alert("Vous êtes trop lent ! Game Over !");
+      alert(
+        "Vous êtes trop lent mais toujours moins que MATHIAS ! Game Over !"
+      );
       document.location.reload();
       clearInterval(interval);
     }
