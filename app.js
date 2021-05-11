@@ -1,20 +1,29 @@
 const canvas = document.getElementById("myCanvas");
 const context = canvas.getContext("2d");
 
+// Positon initiale de la balle
 let x = canvas.width / 2;
 let y = canvas.height - 30;
 
+// Mouvement de la balle
 let dx = 2;
 let dy = -2;
 
+//La taille de la balle
 let ballRadius = 10;
 
+//La raquette
 const paddleHeight = 10;
 const paddleWidth = 75;
-const paddleX = (canvas.width - paddleWidth) / 2;
+let paddleX = (canvas.width - paddleWidth) / 2;
 
-const rightPressed = false;
-const leftPressed = false;
+//Les Inputs
+let rightPressed = false;
+let leftPressed = false;
+
+//L'Animation de la balle
+let speed = 10;
+let interval = setInterval(draw, speed);
 
 document.addEventListener("keydown", keyDownHandler, false);
 document.addEventListener("keyup", keyUpHandler, false);
@@ -61,21 +70,29 @@ function draw() {
   drawBall();
   drawPaddle();
 
-  x += dx;
-  y += dy;
-
-  if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
+  if (y + dy < ballRadius) {
     dy = -dy;
+  } else if (y + dy > canvas.height - ballRadius) {
+    if (x > paddleX && x < paddleX + paddleWidth) {
+      dy = -dy;
+      //   interval = setInterval(draw, speed - 0.5);
+    } else {
+      alert("Vous êtes trop lent ! Game Over !");
+      document.location.reload();
+      clearInterval(interval);
+    }
   }
+
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx;
   }
 
-  if (rightPressed) {
-    paddleX += 7;
-  } else if (leftPressed) {
-    paddleX -= 7;
+  if (rightPressed && paddleX < canvas.width - paddleWidth) {
+    paddleX += 5;
+  } else if (leftPressed && paddleX > 0) {
+    paddleX -= 5;
   }
-}
 
-setInterval(draw, 10);
+  x += dx;
+  y += dy;
+}
