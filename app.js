@@ -22,8 +22,8 @@ let rightPressed = false;
 let leftPressed = false;
 
 //les briques
-const brickRowCount = 3;
-const brickColumnCount = 5;
+const brickRowCount = 8;
+const brickColumnCount = 12;
 const brickWidth = 75;
 const brickHeight = 20;
 const brickPadding = 10;
@@ -86,7 +86,7 @@ function collisionDetection() {
           b.status = 0;
           score++;
           if (score == brickRowCount * brickColumnCount) {
-            alert("Bravo ! Mais tu ne battras jamais les devs ;)");
+            alert("Bravo !");
             document.location.reload();
           }
         }
