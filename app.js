@@ -164,7 +164,7 @@ function draw() {
     } else {
       lives--;
       if (!lives) {
-        // alert("Game Over ?");
+        alert("Astuce : entraînez-vous sur le niveau Facile ");
         document.location.reload();
       } else {
         x = canvas.width / 2;
@@ -193,3 +193,5 @@ function draw() {
 }
 
 draw();
+
+onload(alert("On s'amuse bien, non ?"));

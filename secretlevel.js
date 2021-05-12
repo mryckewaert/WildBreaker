@@ -6,15 +6,15 @@ let x = canvas.width / 2;
 let y = canvas.height - 30;
 
 // Mouvement de la balle
-let dx = 15;
-let dy = -15;
+let dx = 3;
+let dy = -3;
 
 //La taille de la balle
-let ballRadius = 5;
+let ballRadius = 10;
 
 //La raquette
-const paddleHeight = 10;
-const paddleWidth = 40;
+const paddleHeight = 20;
+const paddleWidth = 90;
 let paddleX = (canvas.width - paddleWidth) / 2;
 
 //Les Inputs
@@ -22,11 +22,11 @@ let rightPressed = false;
 let leftPressed = false;
 
 //les briques
-const brickRowCount = 20;
-const brickColumnCount = 40;
-const brickWidth = 20;
-const brickHeight = 10;
-const brickPadding = 1;
+const brickRowCount = 10;
+const brickColumnCount = 11;
+const brickWidth = 75;
+const brickHeight = 20;
+const brickPadding = 2;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
 
@@ -34,7 +34,7 @@ const brickOffsetLeft = 30;
 let score = 0;
 
 //compteur de vies
-let lives = 1;
+let lives = 3;
 
 // creation lignes et colonnes briques
 let bricks = [];
@@ -86,8 +86,8 @@ function collisionDetection() {
           b.status = 0;
           score++;
           if (score == brickRowCount * brickColumnCount) {
-            alert("Alors là chapeau !");
-            document.location.reload();
+            alert("Bravo ! La suite s'annonce plus difficile..");
+            document.location.href = "hard.html";
           }
         }
       }
@@ -102,15 +102,15 @@ function drawScore() {
 }
 
 function drawLives() {
-  context.font = "16px Arial";
+  context.font = "20px Arial";
   context.fillStyle = "rgb(66, 151, 160)";
-  context.fillText("Lives: " + lives, canvas.width - 65, 20);
+  context.fillText("Lives: " + lives, canvas.width - 80, 20);
 }
 
 function drawBall() {
   context.beginPath();
   context.arc(x, y, ballRadius, 0, Math.PI * 2);
-  context.fillStyle = "#f4eae6";
+  context.fillStyle = "hsl(" + 360 * Math.random() + ", 50%, 50%)";
   context.fill();
   context.closePath();
 }
@@ -123,7 +123,7 @@ function drawPaddle() {
     paddleWidth,
     paddleHeight
   );
-  context.fillStyle = "#4297a0";
+  context.fillStyle = "hsl(" + 360 * Math.random() + ", 50%, 50%)";
   context.fill();
   context.closePath();
 }
@@ -138,7 +138,7 @@ function drawBricks() {
         bricks[c][r].y = brickY;
         context.beginPath();
         context.rect(brickX, brickY, brickWidth, brickHeight);
-        context.fillStyle = "#e57f84";
+        context.fillStyle = "hsl(" + 360 * Math.random() + ", 50%, 50%)";
         context.fill();
         context.closePath();
       }
@@ -164,7 +164,7 @@ function draw() {
     } else {
       lives--;
       if (!lives) {
-        alert("GAME OVER, il faut travailler vos réflexes !");
+        alert("Game Over ?");
         document.location.reload();
       } else {
         x = canvas.width / 2;
@@ -194,4 +194,4 @@ function draw() {
 
 draw();
 
-onload(alert("Hard mode ON"));
+onload(alert("Warning ! Flashing Lights"));

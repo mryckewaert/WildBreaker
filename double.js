@@ -4,17 +4,22 @@ const context = canvas.getContext("2d");
 // Positon initiale de la balle
 let x = canvas.width / 2;
 let y = canvas.height - 30;
+let x2 = canvas.width / 2;
+let y2 = canvas.height - 30;
 
 // Mouvement de la balle
-let dx = 15;
-let dy = -15;
+let dx = 4;
+let dy = -4;
+let dx2 = -4;
+let dy2 = -4;
 
 //La taille de la balle
-let ballRadius = 5;
+let ballRadius = 10;
+let ballRadius2 = 10;
 
 //La raquette
-const paddleHeight = 10;
-const paddleWidth = 40;
+const paddleHeight = 20;
+const paddleWidth = 150;
 let paddleX = (canvas.width - paddleWidth) / 2;
 
 //Les Inputs
@@ -22,11 +27,11 @@ let rightPressed = false;
 let leftPressed = false;
 
 //les briques
-const brickRowCount = 20;
-const brickColumnCount = 40;
-const brickWidth = 20;
-const brickHeight = 10;
-const brickPadding = 1;
+const brickRowCount = 8;
+const brickColumnCount = 11;
+const brickWidth = 75;
+const brickHeight = 20;
+const brickPadding = 2;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
 
@@ -34,7 +39,7 @@ const brickOffsetLeft = 30;
 let score = 0;
 
 //compteur de vies
-let lives = 1;
+let lives = 7;
 
 // creation lignes et colonnes briques
 let bricks = [];
@@ -86,8 +91,32 @@ function collisionDetection() {
           b.status = 0;
           score++;
           if (score == brickRowCount * brickColumnCount) {
-            alert("Alors là chapeau !");
-            document.location.reload();
+            alert("Bravo ! La suite s'annonce plus difficile..");
+            document.location.href = "hard.html";
+          }
+        }
+      }
+    }
+  }
+}
+
+function collisionDetection2() {
+  for (let c = 0; c < brickColumnCount; c++) {
+    for (let r = 0; r < brickRowCount; r++) {
+      const b = bricks[c][r];
+      if (b.status == 1) {
+        if (
+          x2 > b.x &&
+          x2 < b.x + brickWidth &&
+          y2 > b.y &&
+          y2 < b.y + brickHeight
+        ) {
+          dy2 = -dy2;
+          b.status = 0;
+          score++;
+          if (score == brickRowCount * brickColumnCount) {
+            alert("Bravo ! La suite s'annonce plus difficile..");
+            document.location.href = "hard.html";
           }
         }
       }
@@ -102,14 +131,21 @@ function drawScore() {
 }
 
 function drawLives() {
-  context.font = "16px Arial";
+  context.font = "20px Arial";
   context.fillStyle = "rgb(66, 151, 160)";
-  context.fillText("Lives: " + lives, canvas.width - 65, 20);
+  context.fillText("Lives: " + lives, canvas.width - 80, 20);
 }
 
 function drawBall() {
   context.beginPath();
-  context.arc(x, y, ballRadius, 0, Math.PI * 2);
+  context.arc(x, y, ballRadius, 10, Math.PI * 2);
+  context.fillStyle = "#f4eae6";
+  context.fill();
+  context.closePath();
+}
+function drawBall2() {
+  context.beginPath();
+  context.arc(x2, y2, ballRadius2, 0, Math.PI * 2);
   context.fillStyle = "#f4eae6";
   context.fill();
   context.closePath();
@@ -138,7 +174,7 @@ function drawBricks() {
         bricks[c][r].y = brickY;
         context.beginPath();
         context.rect(brickX, brickY, brickWidth, brickHeight);
-        context.fillStyle = "#e57f84";
+        context.fillStyle = "hsl(" + 25 * Math.random() + ", 50%, 50%)";
         context.fill();
         context.closePath();
       }
@@ -151,9 +187,11 @@ function draw() {
 
   drawBricks();
   drawBall();
+  drawBall2();
   drawPaddle();
   drawScore();
   drawLives();
+  collisionDetection2();
   collisionDetection();
 
   if (y + dy < ballRadius) {
@@ -164,7 +202,7 @@ function draw() {
     } else {
       lives--;
       if (!lives) {
-        alert("GAME OVER, il faut travailler vos réflexes !");
+        alert("Astuce : entraînez-vous sur le niveau Facile ");
         document.location.reload();
       } else {
         x = canvas.width / 2;
@@ -175,9 +213,31 @@ function draw() {
       }
     }
   }
+  if (y2 + dy2 < ballRadius2) {
+    dy2 = -dy2;
+  } else if (y2 + dy2 > canvas.height - ballRadius2) {
+    if (x2 > paddleX && x2 < paddleX + paddleWidth) {
+      dy2 = -dy2;
+    } else {
+      lives--;
+      if (!lives) {
+        alert("Astuce : entraînez-vous sur le niveau Facile ");
+        document.location.reload();
+      } else {
+        x2 = canvas.width / 2;
+        y2 = canvas.height - 30;
+        dx2 = 3;
+        dy2 = -3;
+        paddleX = (canvas.width - paddleWidth) / 2;
+      }
+    }
+  }
 
   if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
     dx = -dx;
+  }
+  if (x2 + dx2 > canvas.width - ballRadius2 || x2 + dx2 < ballRadius2) {
+    dx2 = -dx2;
   }
 
   if (rightPressed && paddleX < canvas.width - paddleWidth) {
@@ -188,10 +248,12 @@ function draw() {
 
   x += dx;
   y += dy;
+  x2 += dx2;
+  y2 += dy2;
 
   requestAnimationFrame(draw);
 }
 
 draw();
 
-onload(alert("Hard mode ON"));
+onload(alert("Double Trouble"));

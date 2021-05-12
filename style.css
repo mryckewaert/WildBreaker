@@ -3,6 +3,11 @@ body {
   padding: 0;
 }
 
+.secretlink {
+  text-decoration: none;
+  color: rgb(86, 200, 212);
+}
+
 .main {
   background-color: #f4eae6;
 }
@@ -22,9 +27,6 @@ h1 {
   background-color: #2f5061;
   margin-top: 7em;
   margin-bottom: 7em;
-}
-
-.canvas {
 }
 
 footer {
@@ -55,6 +57,5 @@ footer {
 
 .contour {
   border: 1px solid rgb(54, 53, 53);
-
   box-shadow: 5px 10px 10px rgb(146, 146, 146);
 }

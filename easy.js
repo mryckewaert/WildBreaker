@@ -6,15 +6,15 @@ let x = canvas.width / 2;
 let y = canvas.height - 30;
 
 // Mouvement de la balle
-let dx = 15;
-let dy = -15;
+let dx = 0.5;
+let dy = -0.5;
 
 //La taille de la balle
-let ballRadius = 5;
+let ballRadius = 10;
 
 //La raquette
-const paddleHeight = 10;
-const paddleWidth = 40;
+const paddleHeight = 20;
+const paddleWidth = 400;
 let paddleX = (canvas.width - paddleWidth) / 2;
 
 //Les Inputs
@@ -22,11 +22,11 @@ let rightPressed = false;
 let leftPressed = false;
 
 //les briques
-const brickRowCount = 20;
-const brickColumnCount = 40;
-const brickWidth = 20;
-const brickHeight = 10;
-const brickPadding = 1;
+const brickRowCount = 1;
+const brickColumnCount = 1;
+const brickWidth = 840;
+const brickHeight = 200;
+const brickPadding = 10;
 const brickOffsetTop = 30;
 const brickOffsetLeft = 30;
 
@@ -34,7 +34,7 @@ const brickOffsetLeft = 30;
 let score = 0;
 
 //compteur de vies
-let lives = 1;
+let lives = 99;
 
 // creation lignes et colonnes briques
 let bricks = [];
@@ -86,8 +86,8 @@ function collisionDetection() {
           b.status = 0;
           score++;
           if (score == brickRowCount * brickColumnCount) {
-            alert("Alors là chapeau !");
-            document.location.reload();
+            alert("Bravo ! La suite s'annonce plus difficile..");
+            document.location.href = "index.html";
           }
         }
       }
@@ -102,9 +102,9 @@ function drawScore() {
 }
 
 function drawLives() {
-  context.font = "16px Arial";
+  context.font = "20px Arial";
   context.fillStyle = "rgb(66, 151, 160)";
-  context.fillText("Lives: " + lives, canvas.width - 65, 20);
+  context.fillText("Lives: " + lives, canvas.width - 80, 20);
 }
 
 function drawBall() {
@@ -164,8 +164,8 @@ function draw() {
     } else {
       lives--;
       if (!lives) {
-        alert("GAME OVER, il faut travailler vos réflexes !");
-        document.location.reload();
+        // alert("Game Over ?");
+        // document.location.reload();
       } else {
         x = canvas.width / 2;
         y = canvas.height - 30;
@@ -194,4 +194,4 @@ function draw() {
 
 draw();
 
-onload(alert("Hard mode ON"));
+onload(alert("Bon courage pour ce niveau.."));
