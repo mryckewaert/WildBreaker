@@ -87,7 +87,7 @@ function collisionDetection() {
           score++;
           if (score == brickRowCount * brickColumnCount) {
             alert("Bravo ! La suite s'annonce plus difficile..");
-            document.location.reload();
+            document.location.href = "hard.html";
           }
         }
       }
@@ -97,20 +97,20 @@ function collisionDetection() {
 
 function drawScore() {
   context.font = "20px Arial";
-  context.fillStyle = "red";
+  context.fillStyle = "rgb(66, 151, 160)";
   context.fillText("Score: " + score, 8, 20);
 }
 
 function drawLives() {
-  context.font = "16px Arial";
-  context.fillStyle = "#0095DD";
-  context.fillText("Lives: " + lives, canvas.width - 65, 20);
+  context.font = "20px Arial";
+  context.fillStyle = "rgb(66, 151, 160)";
+  context.fillText("Lives: " + lives, canvas.width - 80, 20);
 }
 
 function drawBall() {
   context.beginPath();
   context.arc(x, y, ballRadius, 0, Math.PI * 2);
-  context.fillStyle = "black";
+  context.fillStyle = "#f4eae6";
   context.fill();
   context.closePath();
 }
@@ -123,7 +123,7 @@ function drawPaddle() {
     paddleWidth,
     paddleHeight
   );
-  context.fillStyle = "#FF7F50";
+  context.fillStyle = "#4297a0";
   context.fill();
   context.closePath();
 }
@@ -138,7 +138,7 @@ function drawBricks() {
         bricks[c][r].y = brickY;
         context.beginPath();
         context.rect(brickX, brickY, brickWidth, brickHeight);
-        context.fillStyle = "pink";
+        context.fillStyle = "#e57f84";
         context.fill();
         context.closePath();
       }
@@ -164,7 +164,7 @@ function draw() {
     } else {
       lives--;
       if (!lives) {
-        // alert("Game Over ?");
+        alert("Astuce : entraînez-vous sur le niveau Facile ");
         document.location.reload();
       } else {
         x = canvas.width / 2;
@@ -193,3 +193,5 @@ function draw() {
 }
 
 draw();
+
+onload(alert("On s'amuse bien, non ?"));
