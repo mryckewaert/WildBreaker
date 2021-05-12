@@ -23,7 +23,7 @@ let leftPressed = false;
 
 //les briques
 const brickRowCount = 20;
-const brickColumnCount = 47;
+const brickColumnCount = 39;
 const brickWidth = 20;
 const brickHeight = 10;
 const brickPadding = 2;
@@ -97,20 +97,20 @@ function collisionDetection() {
 
 function drawScore() {
   context.font = "20px Arial";
-  context.fillStyle = "red";
+  context.fillStyle = "rgb(66, 151, 160)";
   context.fillText("Score: " + score, 8, 20);
 }
 
 function drawLives() {
   context.font = "16px Arial";
-  context.fillStyle = "#0095DD";
+  context.fillStyle = "rgb(66, 151, 160)";
   context.fillText("Lives: " + lives, canvas.width - 65, 20);
 }
 
 function drawBall() {
   context.beginPath();
   context.arc(x, y, ballRadius, 0, Math.PI * 2);
-  context.fillStyle = "black";
+  context.fillStyle = "#f4eae6";
   context.fill();
   context.closePath();
 }
@@ -123,7 +123,7 @@ function drawPaddle() {
     paddleWidth,
     paddleHeight
   );
-  context.fillStyle = "#FF7F50";
+  context.fillStyle = "#4297a0";
   context.fill();
   context.closePath();
 }
@@ -138,7 +138,7 @@ function drawBricks() {
         bricks[c][r].y = brickY;
         context.beginPath();
         context.rect(brickX, brickY, brickWidth, brickHeight);
-        context.fillStyle = "pink";
+        context.fillStyle = "#e57f84";
         context.fill();
         context.closePath();
       }
