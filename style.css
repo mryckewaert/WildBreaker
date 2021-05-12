@@ -5,6 +5,7 @@ body {
 
 .main {
   background-color: #4e4e4e;
+  display: flex;
 }
 
 h1 {
@@ -28,6 +29,22 @@ footer {
   background-color: #202020;
 }
 
+.scores {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-self: center;
+  width: 20%;
+  border: 4px solid #000000;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.678);
+  background-color: #fff;
+  color: #000000;
+}
+
+.score-list {
+  list-style: none;
+}
+
 .list {
   list-style: none;
   display: flex;
@@ -47,6 +64,6 @@ footer {
 }
 
 .contour {
-  border: 2px solid black;
-  box-shadow: 5px 5px 1px rgb(0, 0, 0);
+  border: 4px solid #000000;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.678);
 }
