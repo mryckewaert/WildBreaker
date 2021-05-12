@@ -87,7 +87,7 @@ function collisionDetection() {
           score++;
           if (score == brickRowCount * brickColumnCount) {
             alert("Bravo ! La suite s'annonce plus difficile..");
-            document.location.reload();
+            document.location.href = "hard.html";
           }
         }
       }

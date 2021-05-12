@@ -164,8 +164,13 @@ function draw() {
     } else {
       lives--;
       if (!lives) {
-        alert("GAME OVER, Mathias n'est jamais allé aussi loin, LUI");
-        document.location.reload();
+        if (score > 13) {
+          alert("GAME OVER, Mathias n'est jamais allé aussi loin, LUI");
+          document.location.href = "index.html";
+        } else {
+          alert("GAME OVER, Mathias a fait mieux, LUI");
+          document.location.href = "index.html";
+        }
       } else {
         x = canvas.width / 2;
         y = canvas.height - 30;
