@@ -23,7 +23,7 @@ let leftPressed = false;
 
 //les briques
 const brickRowCount = 8;
-const brickColumnCount = 12;
+const brickColumnCount = 10;
 const brickWidth = 75;
 const brickHeight = 20;
 const brickPadding = 10;
@@ -164,7 +164,7 @@ function draw() {
     } else {
       lives--;
       if (!lives) {
-        alert("Game Over ?");
+        // alert("Game Over ?");
         document.location.reload();
       } else {
         x = canvas.width / 2;
