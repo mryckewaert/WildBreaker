@@ -11,6 +11,6 @@ function tirer() {
   }
 
   if (pile >= 10) {
-    document.location.href = "index.html";
+    document.location.href = "easy.html";
   }
 }
